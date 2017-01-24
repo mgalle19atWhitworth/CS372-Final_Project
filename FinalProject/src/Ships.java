@@ -11,6 +11,7 @@ boolean offensive;
 boolean defensive;
 boolean defensive2;
 boolean ordnance;
+private String combine;
 
 public Ships(String n,String p, char h, char s,boolean o,boolean sup,boolean w,boolean off, boolean d, boolean d2, boolean or){
 	name =n;
@@ -25,6 +26,10 @@ public Ships(String n,String p, char h, char s,boolean o,boolean sup,boolean w,b
 	defensive2 =d2;
 	ordnance=or;
 	
+}
+public String getDetails(){
+	combine = name +" Points: "+ points +" Hull: "+hull +" Speed: "+speed;
+	return combine;
 }
 
 }

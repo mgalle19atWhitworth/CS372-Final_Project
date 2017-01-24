@@ -1,7 +1,8 @@
 /Armada.csv
-/Armada.txt
 /Bonus.class
 /Defensive.class
+/NoteReader$1.class
+/NoteReader$2.class
 /NoteReader.class
 /Offensive.class
 /Officer.class
@@ -9,5 +10,6 @@
 /Ships.class
 /Support.class
 /Weapons.class
-/NoteReader$1.class
-/NoteReader$2.class
+/NoteReader$3.class
+/NoteReader$4.class
+/NoteReader$5.class

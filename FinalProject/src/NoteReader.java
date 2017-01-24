@@ -8,6 +8,8 @@ import javax.swing.DefaultListModel;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.table.AbstractTableModel;
+import javax.swing.table.TableModel;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -25,6 +27,16 @@ public class NoteReader  extends JFrame {
 	public static boolean defensive;
 	public static boolean defensive2;
 	public static boolean ordnance;
+	public static String combine;
+	public static String combine2;
+	public static String combine3;
+	public static String combine4;
+	public static String combine5;
+	public static String combine6;
+	public static String combine7;
+	public static String combineAll;
+	
+	static String s[] ={"Officer"};
 	static ArrayList<Ships> ship= new ArrayList<Ships>();
 	static ArrayList<Officer> Officers = new ArrayList<Officer>();
 	static ArrayList<Support> supports = new ArrayList<Support>();
@@ -33,26 +45,21 @@ public class NoteReader  extends JFrame {
 	static ArrayList<Defensive> def= new ArrayList<Defensive>();
 	static ArrayList<Defensive> def2 = new ArrayList<Defensive>();
 	static ArrayList<Ordnance> or = new ArrayList<Ordnance>();
-	static JList<String>OfficerList = new JList<String>();
-	static JList<String> OrdnanceList = new JList<String>();
-	static JList<String> SupportList=new JList<String>();
-	static JList<String> WeaponsList= new JList<String>();
-	static JList<String> OffensiveList=new JList<String>();
-	static JList<String> DefensiveList= new JList<String>();
-	static JList<String> DefensiveList2=new JList<String>();
+	static ArrayList<String> selected = new ArrayList<String>();
+	
 	
 public static void main(String[] args){
 DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-DefaultListModel<String> model2 = new DefaultListModel<String>();
-DefaultListModel<String> model3 = new DefaultListModel<String>();
-DefaultListModel<String>model4 = new DefaultListModel<String>();
-DefaultListModel<String>model5 = new DefaultListModel<String>();
-DefaultListModel<String>model6 = new DefaultListModel<String>();
-DefaultListModel<String>model7 = new DefaultListModel<String>();
-DefaultListModel<String>model8 = new DefaultListModel<String>();
+DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<String>();
+DefaultComboBoxModel<String> model3 = new DefaultComboBoxModel<String>();
+DefaultComboBoxModel<String>model4 = new DefaultComboBoxModel<String>();
+DefaultComboBoxModel<String>model5 = new DefaultComboBoxModel<String>();
+DefaultComboBoxModel<String>model6 = new DefaultComboBoxModel<String>();
+DefaultComboBoxModel<String>model7 = new DefaultComboBoxModel<String>();
+DefaultComboBoxModel<String>model8 = new DefaultComboBoxModel<String>();
 
 
-JFrame frame = new JFrame("Hello");
+JFrame frame = new JFrame("FinalProject");
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 	String curdir = System.getProperty("user.dir") + "\\src";
@@ -220,47 +227,95 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	model8.addElement(o.name);
     }
     JComboBox comboBox = new JComboBox(model);
-    JList<String> ShipList = new JList<String>(comboBox.getModel());
-    
+    JComboBox combo = new JComboBox(model2);
+    JComboBox support = new JComboBox(model3);
+    JComboBox weapons = new JComboBox(model4);
+    JComboBox offensive = new JComboBox(model5);
+    JComboBox defn = new JComboBox(model6);
+    JComboBox defn2 = new JComboBox(model7);
+    JComboBox ordnance = new JComboBox(model8);
+   // JList<String>OfficerList = new JList<String>(combo.getModel());
+   // JList<String> ShipList = new JList<String>(comboBox.getModel());
+   // JList<String> OrdnanceList = new JList<String>(comboBox.getModel());
+   // JList<String> SupportList=new JList<String>(comboBox.getModel());
+//	JList<String> WeaponsList= new JList<String>(comboBox.getModel());
+	//JList<String> OffensiveList=new JList<String>(comboBox.getModel());
+	//JList<String> DefensiveList= new JList<String>(comboBox.getModel());
+	//JList<String> DefensiveList2=new JList<String>(comboBox.getModel());
    
-    
+	JPanel comboPanel = new JPanel();
+    JPanel comboPanel2 = new JPanel();
+    comboPanel.add(comboBox);
+       
     JButton button = new JButton("Info");
     JButton b = new JButton("Select");
+    JButton b2 = new JButton("Clear");
+    JButton b3 = new JButton("Add");
+    JLabel l = new JLabel("Ships");
     b.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		String selection =  (String) comboBox.getSelectedItem();
     		for (int i = 0; i < ship.size();i++){
     			if (selection == ship.get(i).name){
     				if(ship.get(i).officer == true){
-    					OfficerList = new JList<String>(model2);
-    					frame.add(OfficerList);
-    					System.out.println("officer");
+    					comboPanel2.add(combo);
     				}
     				if (ship.get(i).support == true){
-    					SupportList=new JList<String>(model3);
-    					System.out.println("support");
+    					comboPanel2.add(support);    					
     				}
     				if (ship.get(i).weapons == true){
-    					WeaponsList= new JList<String>(model4);
-    					System.out.println("weapons");
+    					comboPanel2.add(weapons);
     				}
     				if (ship.get(i).offensive == true){
-    					OffensiveList=new JList<String>(model5);
-    					System.out.println("offensive");
+    					comboPanel2.add(offensive);    					
     				}
     				if(ship.get(i).defensive == true){
-    					DefensiveList= new JList<String>(model6);
-    					System.out.println("defensive");
+    					comboPanel2.add(defn);
     				}
     				if (ship.get(i).defensive2 == true)
     				{
-    					DefensiveList2=new JList<String>(model7);
-    					System.out.println("d2");
+    					comboPanel2.add(defn2);    					
     				}
     				if(ship.get(i).ordnance ==true){
-    					OrdnanceList = new JList<String>(model8);
-    					System.out.println("ordnance");
+    					comboPanel2.add(ordnance);
     				}	
+    				frame.add(comboPanel2);
+    				frame.setVisible(true);
+    			}
+    		}
+    	}
+    	
+    });
+    b2.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+    		String selection =  (String) comboBox.getSelectedItem();
+    		for (int i = 0; i < ship.size();i++){
+    			if (selection == ship.get(i).name){
+    				if(ship.get(i).officer == true){
+    					comboPanel2.remove(combo);	
+    				}
+    				if (ship.get(i).support == true){
+    					comboPanel2.remove(support);
+    					
+    				}
+    				if (ship.get(i).weapons == true){
+    					comboPanel2.remove(weapons);
+    				}
+    				if (ship.get(i).offensive == true){
+    					comboPanel2.remove(offensive);
+    					
+    				}
+    				if(ship.get(i).defensive == true){
+    					 comboPanel2.remove(defn);
+    				}
+    				if (ship.get(i).defensive2 == true){
+    					 comboPanel2.remove(defn2);
+    				}
+    				if(ship.get(i).ordnance ==true){
+    					comboPanel2.remove(ordnance);
+    				}
+    				frame.add(comboPanel2);
+    				frame.setVisible(true);
     			}
     		}
     	}
@@ -276,20 +331,89 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     		}
     	}
     });
+    b3.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+    		String selection =  (String) comboBox.getSelectedItem();
+    		for(int i = 0; i< ship.size(); i++){
+    			combine = " ";
+    			if(selection == ship.get(i).name){
+    				combine = ship.get(i).getDetails();
+    			}
+    			if(ship.get(i).officer == true){
+    				selection =(String) combo.getSelectedItem();
+    				for ( int i2 = 0; i2 < Officers.size();i2++)
+    					if (selection == Officers.get(i2).name){
+    						combine = combine+ " Officer: "+Officers.get(i2).name;
+    					}
+    				
+    			}
+    			
+    				if (ship.get(i).support == true){
+    					selection =(String) support.getSelectedItem();
+        				for ( int i3 = 0; i3 <supports.size();i3++){
+        					if (selection == supports.get(i3).name){
+        						combine =combine +" Supports: "+supports.get(i3).name;
+        					}
+        				}
+    					
+    				}
+
+    				if (ship.get(i).weapons == true){
+    					selection =(String) weapons.getSelectedItem();
+        				for ( int i2 = 0; i2 < weapon.size();i2++){
+        					if (selection == weapon.get(i2).name){
+        						combine =combine + " Weapon: "+weapon.get(i2).name;
+        					}
+        				}
+    				}
+    				if (ship.get(i).offensive == true){
+    					selection =(String) offensive.getSelectedItem();
+        				for ( int i2 = 0; i2 < off.size();i2++){
+        					if (selection == off.get(i2).name){
+        						combine =combine +" Offensive: "+off.get(i2).name;
+        					}
+        				}
+    					
+    				}
+    				if(ship.get(i).defensive == true){
+    					selection =(String) defn.getSelectedItem();
+        				for ( int i2 = 0; i2 < def.size();i2++){
+        					if (selection == Officers.get(i2).name){
+        						combine =combine + " Defensive: "+def.get(i).name;
+        					}
+        				}
+    				}
+    				if (ship.get(i).defensive2 == true){
+    					selection =(String) defn2.getSelectedItem();
+        				for ( int i2 = 0; i2 < def2.size();i2++){
+        					if (selection == def2.get(i2).name){
+        						combine =combine +" Defensive2: "+def2.get(i2).name;
+        					}
+        				}
+    				}
+    				if(ship.get(i).ordnance ==true){
+    					selection =(String) ordnance.getSelectedItem();
+        				for ( int i2 = 0; i2 < or.size();i2++){
+        					if (selection == or.get(i2).name){
+        						combine =combine+ " Ordnance: "+or.get(i2).name;
+        					}
+        				}
+    				}
+    				
+    				selected.add(combine);	
+    				System.out.println(combine);
+    }	
+    	}	
+    	
+    });
+   
     
-    JPanel comboPanel = new JPanel();
-    comboPanel.add(comboBox);
     frame.add(comboPanel);
     frame.add(button);
     frame.add(b);
-    
-    frame.add(OfficerList);
-    frame.add(SupportList);
-    frame.add(WeaponsList);
-    frame.add(OffensiveList);
-    frame.add(DefensiveList);
-    frame.add(DefensiveList2);
-    frame.add(OrdnanceList);
+    frame.add(b2);
+    frame.add(b3);
+    frame.add(l);
     frame.setLayout(new FlowLayout());
     frame.setSize(800,800);
     frame.setVisible(true);
