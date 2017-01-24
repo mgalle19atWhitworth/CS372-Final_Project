@@ -34,17 +34,22 @@ public class NoteReader  extends JFrame {
 	public static String combine5;
 	public static String combine6;
 	public static String combine7;
+	public static String combine8;
 	public static String combineAll;
+	public static int x =0;
+	public static int p;
+	public static int totalPoints = 400;
+	public static String stringPoints;
 	
-	static String s[] ={"Officer"};
+	
 	static ArrayList<Ships> ship= new ArrayList<Ships>();
-	static ArrayList<Officer> Officers = new ArrayList<Officer>();
-	static ArrayList<Support> supports = new ArrayList<Support>();
-	static ArrayList<Weapons> weapon = new ArrayList<Weapons>();
-	static ArrayList<Offensive> off = new ArrayList<Offensive>();
-	static ArrayList<Defensive> def= new ArrayList<Defensive>();
-	static ArrayList<Defensive> def2 = new ArrayList<Defensive>();
-	static ArrayList<Ordnance> or = new ArrayList<Ordnance>();
+	static ArrayList<Officer> OfficersArray = new ArrayList<Officer>();
+	static ArrayList<Support> supportsArray = new ArrayList<Support>();
+	static ArrayList<Weapons> weaponArray = new ArrayList<Weapons>();
+	static ArrayList<Offensive> offArray = new ArrayList<Offensive>();
+	static ArrayList<Defensive> defArray= new ArrayList<Defensive>();
+	static ArrayList<Defensive> def2Array = new ArrayList<Defensive>();
+	static ArrayList<Ordnance> orArray = new ArrayList<Ordnance>();
 	static ArrayList<String> selected = new ArrayList<String>();
 	
 	
@@ -84,6 +89,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                    		points = line.substring(43, 46);
                    		hull=line.charAt(53);
                    		speed=line.charAt(55);
+                   		p = Integer.parseInt(line.substring(43, 45));
                    		char check=line.charAt(59);                   		
                    		if(check=='E')
                    			officer=true;
@@ -124,6 +130,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		if (s >= 0 && e >= 0)
                       		name = line.substring(s+1, e);                     		
                       		points = line.substring(34, 36);
+                      		p = Integer.parseInt(line.substring(34,35));
                       			
                        }
                        else if (line.contains("Support")){                   	 
@@ -131,8 +138,8 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		int e = line.indexOf('"', s+1);
                       		if (s >= 0 && e >= 0)
                       		name = line.substring(s+1, e);                     		
-                      		points = line.substring(36, 37);
-                      		
+                      		points = line.substring(37, 38);
+                      		p = Integer.parseInt(line.substring(37,38));
                  		}
                        else if (line.contains("Weapons")){ 
                     	   int s = line.indexOf('"');
@@ -140,7 +147,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		if (s >= 0 && e >= 0)
                       		name = line.substring(s+1, e);                     		
                       		points = line.substring(30, 31);
-                      		
+                      		p = Integer.parseInt(line.substring(30,31));
                  		}
                        else if (line.contains("Offensive")){ 
                     	   int s = line.indexOf('"');
@@ -148,7 +155,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		if (s >= 0 && e >= 0)
                       		name = line.substring(s+1, e);                     		
                       		points = line.substring(36, 37);
-                      		
+                      		p = Integer.parseInt(line.substring(36,37));
                  		}
                        else if (line.contains("Defensive")){ 
                     	   int s = line.indexOf('"');
@@ -156,7 +163,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		if (s >= 0 && e >= 0)
                       		name = line.substring(s+1, e);                     		
                       		points = line.substring(39, 40);
-                      		
+                      		p = Integer.parseInt(line.substring(39,40));
                  		}
                        else if(line.contains("Ordnance")){
                     	   int s = line.indexOf('"');
@@ -164,35 +171,36 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                      		if (s >= 0 && e >= 0)
                      		name = line.substring(s+1, e);                     		
                      		points = line.substring(39, 41);
+                     		p = Integer.parseInt(line.substring(39,40));
                        }
                     if(line.contains("Ship")){
-                    Ships S= new  Ships( name, points, hull, speed, officer, support,weapons,offensive, defensive,defensive2, ordnance);
+                    Ships S= new  Ships( name, points,p, hull, speed, officer, support,weapons,offensive, defensive,defensive2, ordnance);
                     ship.add(S);
                     }
                     else if (line.contains("Officer")){
-                    	Officer o = new Officer(name,points);
-                    	Officers.add(o);
+                    	Officer o = new Officer(name,points,p);
+                    	OfficersArray.add(o);
                     }
                     else if(line.contains("Support")){
-                    	Support s = new Support(name,points);
-                    	supports.add(s);
+                    	Support s = new Support(name,points,p);
+                    	supportsArray.add(s);
                     }
                     else if(line.contains("Weapons")){
-                    	Weapons w = new Weapons(name,points);
-                    	weapon.add(w);
+                    	Weapons w = new Weapons(name,points,p);
+                    	weaponArray.add(w);
                     }
                     else if(line.contains("Offensive")){
-                    	Offensive o = new Offensive(name,points);
-                    	off.add(o);
+                    	Offensive o = new Offensive(name,points,p);
+                    	offArray.add(o);
                     }
                     else if(line.contains("Defensive")){
-                    	Defensive d = new Defensive(name,points);
-                    	def.add(d);
-                    	def2.add(d);
+                    	Defensive d = new Defensive(name,points,p);
+                    	defArray.add(d);
+                    	def2Array.add(d);
                     }
                     else if(line.contains("Ordnance")){
-                    	Ordnance o = new Ordnance(name,points);
-                    	or.add(o);
+                    	Ordnance o = new Ordnance(name,points,p);
+                    	orArray.add(o);
                     }
                     line = rdr.readLine();
                 }
@@ -205,79 +213,87 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	model.addElement(s.name);
   
     }
-    for(Officer officer: Officers){
+    for(Officer officer: OfficersArray){
     	model2.addElement(officer.name);
     }
-    for(Support s: supports){
+    for(Support s: supportsArray){
     	model3.addElement(s.name);
     }
-    for(Weapons w: weapon){
+    for(Weapons w: weaponArray){
     	model4.addElement(w.name);
     }
-    for(Offensive o: off){
+    for(Offensive o: offArray){
     	model5.addElement(o.name);
     }
-    for(Defensive d : def){
+    for(Defensive d : defArray){
     	model6.addElement(d.name);
     }
-    for (Defensive d: def2){
+    for (Defensive d: def2Array){
     	model7.addElement(d.name);
     }
-    for (Ordnance o: or){
+    for (Ordnance o: orArray){
     	model8.addElement(o.name);
     }
-    JComboBox comboBox = new JComboBox(model);
-    JComboBox combo = new JComboBox(model2);
-    JComboBox support = new JComboBox(model3);
-    JComboBox weapons = new JComboBox(model4);
-    JComboBox offensive = new JComboBox(model5);
-    JComboBox defn = new JComboBox(model6);
-    JComboBox defn2 = new JComboBox(model7);
-    JComboBox ordnance = new JComboBox(model8);
-   // JList<String>OfficerList = new JList<String>(combo.getModel());
-   // JList<String> ShipList = new JList<String>(comboBox.getModel());
-   // JList<String> OrdnanceList = new JList<String>(comboBox.getModel());
-   // JList<String> SupportList=new JList<String>(comboBox.getModel());
-//	JList<String> WeaponsList= new JList<String>(comboBox.getModel());
-	//JList<String> OffensiveList=new JList<String>(comboBox.getModel());
-	//JList<String> DefensiveList= new JList<String>(comboBox.getModel());
-	//JList<String> DefensiveList2=new JList<String>(comboBox.getModel());
+    JComboBox shipBox = new JComboBox(model);
+    JComboBox officerBox = new JComboBox(model2);
+    JComboBox supportBox = new JComboBox(model3);
+    JComboBox weaponsBox = new JComboBox(model4);
+    JComboBox offensiveBox = new JComboBox(model5);
+    JComboBox defBox = new JComboBox(model6);
+    JComboBox def2Box = new JComboBox(model7);
+    JComboBox ordnanceBox = new JComboBox(model8);
    
 	JPanel comboPanel = new JPanel();
     JPanel comboPanel2 = new JPanel();
-    comboPanel.add(comboBox);
-       
-    JButton button = new JButton("Info");
+    JPanel buttonPanel = new JPanel();
+    JPanel buttonPanel2 = new JPanel();
+    comboPanel.add(shipBox);
+    
+    JButton button = new JButton("Ship Info");
+    JButton button2 = new JButton("Officer Info");
+    JButton button3 = new JButton("Support Info");
+    JButton button4 = new JButton("Weapons Info");
+    JButton button5 = new JButton("Offensive Info");
+    JButton button6 = new JButton("Defensive Info");
+    JButton button7 = new JButton("Ordinance Info");
     JButton b = new JButton("Select");
     JButton b2 = new JButton("Clear");
     JButton b3 = new JButton("Add");
     JLabel l = new JLabel("Ships");
+ l.setLocation(250, 500);
+    stringPoints = "Points: "+String.valueOf(totalPoints);
+    JLabel l2 = new JLabel(stringPoints);
+    Box buttonBox =Box.createHorizontalBox();
+    Box buttonBox2 =Box.createHorizontalBox();
+    
+  
+    
     b.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
-    		String selection =  (String) comboBox.getSelectedItem();
+    		String selection =  (String) shipBox.getSelectedItem();
     		for (int i = 0; i < ship.size();i++){
     			if (selection == ship.get(i).name){
     				if(ship.get(i).officer == true){
-    					comboPanel2.add(combo);
+    					comboPanel2.add(officerBox);
     				}
     				if (ship.get(i).support == true){
-    					comboPanel2.add(support);    					
+    					comboPanel2.add(supportBox);    					
     				}
     				if (ship.get(i).weapons == true){
-    					comboPanel2.add(weapons);
+    					comboPanel2.add(weaponsBox);
     				}
     				if (ship.get(i).offensive == true){
-    					comboPanel2.add(offensive);    					
+    					comboPanel2.add(offensiveBox);    					
     				}
     				if(ship.get(i).defensive == true){
-    					comboPanel2.add(defn);
+    					comboPanel2.add(defBox);
     				}
     				if (ship.get(i).defensive2 == true)
     				{
-    					comboPanel2.add(defn2);    					
+    					comboPanel2.add(def2Box);    					
     				}
     				if(ship.get(i).ordnance ==true){
-    					comboPanel2.add(ordnance);
+    					comboPanel2.add(ordnanceBox);
     				}	
     				frame.add(comboPanel2);
     				frame.setVisible(true);
@@ -288,32 +304,33 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     });
     b2.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
-    		String selection =  (String) comboBox.getSelectedItem();
+    		String selection =  (String) shipBox.getSelectedItem();
     		for (int i = 0; i < ship.size();i++){
     			if (selection == ship.get(i).name){
     				if(ship.get(i).officer == true){
-    					comboPanel2.remove(combo);	
+    					comboPanel2.remove(officerBox);	
     				}
     				if (ship.get(i).support == true){
-    					comboPanel2.remove(support);
+    					comboPanel2.remove(supportBox);
     					
     				}
     				if (ship.get(i).weapons == true){
-    					comboPanel2.remove(weapons);
+    					comboPanel2.remove(weaponsBox);
     				}
     				if (ship.get(i).offensive == true){
-    					comboPanel2.remove(offensive);
+    					comboPanel2.remove(offensiveBox);
     					
     				}
     				if(ship.get(i).defensive == true){
-    					 comboPanel2.remove(defn);
+    					 comboPanel2.remove(defBox);
     				}
     				if (ship.get(i).defensive2 == true){
-    					 comboPanel2.remove(defn2);
+    					 comboPanel2.remove(def2Box);
     				}
     				if(ship.get(i).ordnance ==true){
-    					comboPanel2.remove(ordnance);
+    					comboPanel2.remove(ordnanceBox);
     				}
+    				l.setText("ship");
     				frame.add(comboPanel2);
     				frame.setVisible(true);
     			}
@@ -323,99 +340,218 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     });
     button.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
-    		String selection =  (String) comboBox.getSelectedItem();
+    		String selection;    		
+    		 selection =  (String) shipBox.getSelectedItem();
     		for(int i = 0; i< ship.size(); i++){
-    			if(selection == ship.get(i).name){
-    				System.out.printf("%s,Points: %s, Hull: %c, Speed: %s\n", ship.get(i).name,ship.get(i).points,ship.get(i).hull,ship.get(i).speed);
-    }
+    			if(selection == ship.get(i).name)
+    				l.setText(ship.get(i).getDetails());
+
     		}
+    	}
+    });
+    button3.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+    		
+				String selection =(String) supportBox.getSelectedItem();				
+				for ( int i = 0; i < supportsArray.size();i++){
+					if (selection == supportsArray.get(i).name)
+						l.setText(supportsArray.get(i).getDetails());
+				}
+    	}
+    });
+    button2.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+    		String selection =(String) officerBox.getSelectedItem();				
+			for ( int i = 0; i < OfficersArray.size();i++){
+				if (selection == OfficersArray.get(i).name)
+					l.setText(OfficersArray.get(i).getDetails());
+			}
+    		
+    	}
+    });
+    button4.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+			String selection =(String) weaponsBox.getSelectedItem();				
+			for ( int i = 0; i < weaponArray.size();i++){
+				if (selection == weaponArray.get(i).name)
+					l.setText(weaponArray.get(i).getDetails());
+			}
+    	}
+    });
+    button5.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+		String selection =(String) offensiveBox.getSelectedItem();				
+			for ( int i = 0; i < offArray.size();i++){
+				if (selection == offArray.get(i).name)
+					l.setText(offArray.get(i).getDetails());
+			}
+    	}
+    });
+    button6.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+			String selection =(String) defBox.getSelectedItem();				
+			for ( int i = 0; i < defArray.size();i++){
+				if (selection == defArray.get(i).name)
+					l.setText(defArray.get(i).getDetails());
+			}
+    	}
+    });
+    button7.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+    		String selection =(String) ordnanceBox.getSelectedItem();				
+			for ( int i = 0; i < orArray.size();i++){
+				if (selection == orArray.get(i).name)
+					l.setText(orArray.get(i).getDetails());
+			}
     	}
     });
     b3.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
-    		String selection =  (String) comboBox.getSelectedItem();
+    		String selection =  (String) shipBox.getSelectedItem();
     		for(int i = 0; i< ship.size(); i++){
-    			combine = " ";
+    				combineAll = "";
     			if(selection == ship.get(i).name){
     				combine = ship.get(i).getDetails();
-    			}
+    				combineAll = combine;
+    				if(totalPoints <= 0 || totalPoints - ship.get(i).numPoints <= 0)
+						System.out.printf("Not enough points for %s\n",ship.get(i).name);
+					else
+    				totalPoints = totalPoints -ship.get(i).numPoints;
+    			
     			if(ship.get(i).officer == true){
-    				selection =(String) combo.getSelectedItem();
-    				for ( int i2 = 0; i2 < Officers.size();i2++)
-    					if (selection == Officers.get(i2).name){
-    						combine = combine+ " Officer: "+Officers.get(i2).name;
+    				String selection2 =(String) officerBox.getSelectedItem();
+    				for ( int i2 = 0; i2 < OfficersArray.size();i2++){
+    					if (selection2 == OfficersArray.get(i2).name){
+    						combine2 = " Officer: "+OfficersArray.get(i2).name;
+    						combineAll = combineAll +combine2;
+    						if(totalPoints <= 0 || totalPoints - OfficersArray.get(i2).numPoints <= 0)
+    							System.out.printf("Not enough points for %s\n",OfficersArray.get(i2).name);
+    						else
+    						totalPoints = totalPoints -OfficersArray.get(i2).numPoints;
     					}
-    				
+    				}
     			}
     			
     				if (ship.get(i).support == true){
-    					selection =(String) support.getSelectedItem();
-        				for ( int i3 = 0; i3 <supports.size();i3++){
-        					if (selection == supports.get(i3).name){
-        						combine =combine +" Supports: "+supports.get(i3).name;
+    				String selection3 =(String) supportBox.getSelectedItem();
+        				for ( int i3 = 0; i3 <supportsArray.size();i3++){
+        					if (selection3 == supportsArray.get(i3).name){
+        						combine3 =" Supports: "+supportsArray.get(i3).name;
+        						combineAll = combineAll +combine3;
+        						if(totalPoints <= 0 || totalPoints - supportsArray.get(i3).numPoints <= 0)
+        							System.out.printf("Not enough points for %s\n",supportsArray.get(i3).name);
+        						else
+        						totalPoints = totalPoints -supportsArray.get(i3).numPoints;
         					}
         				}
     					
     				}
-
+    				
     				if (ship.get(i).weapons == true){
-    					selection =(String) weapons.getSelectedItem();
-        				for ( int i2 = 0; i2 < weapon.size();i2++){
-        					if (selection == weapon.get(i2).name){
-        						combine =combine + " Weapon: "+weapon.get(i2).name;
+    				String	selection4 =(String) weaponsBox.getSelectedItem();
+        				for ( int i4 = 0; i4 < weaponArray.size();i4++){
+        					if (selection4 == weaponArray.get(i4).name){
+        						combine4 = " Weapon: "+weaponArray.get(i4).name;
+        						combineAll= combineAll +combine4;
+        						if(totalPoints <= 0 || totalPoints - weaponArray.get(i4).numPoints <= 0)
+        							System.out.printf("Not enough points for %s\n",weaponArray.get(i4).name);
+        						else
+        						totalPoints = totalPoints -weaponArray.get(i4).numPoints;
         					}
         				}
     				}
     				if (ship.get(i).offensive == true){
-    					selection =(String) offensive.getSelectedItem();
-        				for ( int i2 = 0; i2 < off.size();i2++){
-        					if (selection == off.get(i2).name){
-        						combine =combine +" Offensive: "+off.get(i2).name;
+    					String selection5 =(String) offensiveBox.getSelectedItem();
+        				for ( int i5 = 0; i5 < offArray.size();i5++){
+        					if (selection5 == offArray.get(i5).name){
+        						combine5 =" Offensive: "+offArray.get(i5).name;
+        						combineAll = combineAll + combine5;
+        						if(totalPoints <= 0 || totalPoints - offArray.get(i5).numPoints <= 0)
+        							System.out.printf("Not enough points for %s\n",offArray.get(i5).name);
+        						else
+        						totalPoints = totalPoints -offArray.get(i5).numPoints;
         					}
         				}
     					
     				}
     				if(ship.get(i).defensive == true){
-    					selection =(String) defn.getSelectedItem();
-        				for ( int i2 = 0; i2 < def.size();i2++){
-        					if (selection == Officers.get(i2).name){
-        						combine =combine + " Defensive: "+def.get(i).name;
+    					String selection6 =(String) defBox.getSelectedItem();
+        				for ( int i6 = 0; i6 < defArray.size();i6++){
+        					if (selection6 == defArray.get(i6).name){
+        						combine6 =" Defensive: "+defArray.get(i6).name;
+        						combineAll = combineAll + combine6;
+        						if(totalPoints <= 0 || totalPoints - defArray.get(i6).numPoints <= 0)
+        							System.out.printf("Not enough points for %s\n",defArray.get(i6).name);
+        						else
+        						totalPoints = totalPoints -defArray.get(i6).numPoints;
+        						
         					}
         				}
     				}
     				if (ship.get(i).defensive2 == true){
-    					selection =(String) defn2.getSelectedItem();
-        				for ( int i2 = 0; i2 < def2.size();i2++){
-        					if (selection == def2.get(i2).name){
-        						combine =combine +" Defensive2: "+def2.get(i2).name;
+    					String selection7 =(String) def2Box.getSelectedItem();
+        				for ( int i7 = 0; i7 < def2Array.size();i7++){
+        					if (selection7 == def2Array.get(i7).name){
+        						combine7 =" Defensive2: "+def2Array.get(i7).name;
+        						combineAll = combineAll + combine7;
+        						if(totalPoints <= 0 || totalPoints - def2Array.get(i7).numPoints <= 0)
+        							System.out.printf("Not enough points for %s\n",def2Array.get(i7).name);      
+        						else
+        						totalPoints = totalPoints -def2Array.get(i7).numPoints;
         					}
         				}
     				}
     				if(ship.get(i).ordnance ==true){
-    					selection =(String) ordnance.getSelectedItem();
-        				for ( int i2 = 0; i2 < or.size();i2++){
-        					if (selection == or.get(i2).name){
-        						combine =combine+ " Ordnance: "+or.get(i2).name;
+    					String selection8 =(String) ordnanceBox.getSelectedItem();
+        				for ( int i2 = 0; i2 <= orArray.size();i2++){
+        					if (selection8 == orArray.get(i2).name){
+        						combine8 =" Ordnance: "+orArray.get(i2).name;
+        						combineAll = combineAll+combine8;
+        						if(totalPoints <= 0 || totalPoints - orArray.get(i2).numPoints <= 0){
+        							System.out.printf("Not enough points for %s\n",orArray.get(i2).name);
+        						}
+        						else
+        						totalPoints = totalPoints -orArray.get(i2).numPoints;
         					}
         				}
-    				}
-    				
-    				selected.add(combine);	
-    				System.out.println(combine);
+   				}
+    				selected.add(combineAll);	
+    			}		    								
     }	
-    	}	
-    	
+    		stringPoints ="Points: "+ String.valueOf(totalPoints); 		
+    		l.setText(selected.get(x));
+    		l2.setText(stringPoints);
+    		x++;
+    	}	   	 
     });
-   
+    buttonBox.add(button);
+    buttonBox.add(Box.createGlue());
+    buttonBox.add(button2);
+    buttonBox.add(Box.createGlue());
+    buttonBox.add(button3);
+    buttonBox.add(Box.createGlue());
+    buttonBox.add(button5);
+    buttonBox.add(Box.createGlue());
+    buttonBox.add(button6);
+    buttonBox.add(Box.createGlue());
+    buttonBox.add(button7);
+    buttonPanel.add(buttonBox);
     
+    buttonBox2.add(b);
+    buttonBox2.add(Box.createHorizontalGlue());
+    buttonBox2.add(b3);
+    buttonBox2.add(Box.createHorizontalGlue());
+    buttonBox2.add(b2);
+    buttonBox2.add(Box.createHorizontalGlue());
+    buttonPanel2.add(buttonBox2);
+    buttonBox2.add(Box.createHorizontalGlue());
     frame.add(comboPanel);
-    frame.add(button);
-    frame.add(b);
-    frame.add(b2);
-    frame.add(b3);
+    frame.add(buttonPanel);
+    frame.add(buttonPanel2);
     frame.add(l);
+    frame.add(l2);
     frame.setLayout(new FlowLayout());
-    frame.setSize(800,800);
+    frame.setSize(1000,800);
     frame.setVisible(true);
 }
 }
