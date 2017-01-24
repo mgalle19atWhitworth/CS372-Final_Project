@@ -26,4 +26,5 @@ public Ships(String n,String p, char h, char s,boolean o,boolean sup,boolean w,b
 	ordnance=or;
 	
 }
+
 }

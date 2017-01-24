@@ -1,8 +1,8 @@
 
 public class Bonus {
 String name;
-int points;
-public Bonus (String n, int p){
+String points;
+public Bonus (String n, String p){
 	name = n;
 	points = p;
 }
