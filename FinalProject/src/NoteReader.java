@@ -62,6 +62,7 @@ DefaultComboBoxModel<String>model5 = new DefaultComboBoxModel<String>();
 DefaultComboBoxModel<String>model6 = new DefaultComboBoxModel<String>();
 DefaultComboBoxModel<String>model7 = new DefaultComboBoxModel<String>();
 DefaultComboBoxModel<String>model8 = new DefaultComboBoxModel<String>();
+DefaultListModel<String>model9= new DefaultListModel<String>();
 
 
 JFrame frame = new JFrame("FinalProject");
@@ -248,6 +249,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JPanel buttonPanel = new JPanel();
     JPanel buttonPanel2 = new JPanel();
     comboPanel.add(shipBox);
+
     
     JButton button = new JButton("Ship Info");
     JButton button2 = new JButton("Officer Info");
@@ -259,8 +261,8 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JButton b = new JButton("Select");
     JButton b2 = new JButton("Clear");
     JButton b3 = new JButton("Add");
+    JButton b4 = new JButton("Update List");
     JLabel l = new JLabel("Ships");
- l.setLocation(250, 500);
     stringPoints = "Points: "+String.valueOf(totalPoints);
     JLabel l2 = new JLabel(stringPoints);
     Box buttonBox =Box.createHorizontalBox();
@@ -295,6 +297,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     				if(ship.get(i).ordnance ==true){
     					comboPanel2.add(ordnanceBox);
     				}	
+    				comboPanel2.setBounds(0, 250, 1000, 100);
     				frame.add(comboPanel2);
     				frame.setVisible(true);
     			}
@@ -331,6 +334,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     					comboPanel2.remove(ordnanceBox);
     				}
     				l.setText("ship");
+    				comboPanel2.setBounds(0, 0, 0, 0);
     				frame.add(comboPanel2);
     				frame.setVisible(true);
     			}
@@ -503,55 +507,70 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     				}
     				if(ship.get(i).ordnance ==true){
     					String selection8 =(String) ordnanceBox.getSelectedItem();
-        				for ( int i2 = 0; i2 <= orArray.size();i2++){
-        					if (selection8 == orArray.get(i2).name){
-        						combine8 =" Ordnance: "+orArray.get(i2).name;
+        				for ( int i8 = 0; i8 < orArray.size();i8++){
+        					if (selection8 == orArray.get(i8).name){
+        						combine8 =" Ordnance: "+orArray.get(i8).name;
         						combineAll = combineAll+combine8;
-        						if(totalPoints <= 0 || totalPoints - orArray.get(i2).numPoints <= 0){
-        							System.out.printf("Not enough points for %s\n",orArray.get(i2).name);
+        						if(totalPoints <= 0 || totalPoints - orArray.get(i8).numPoints <= 0){
+        							System.out.printf("Not enough points for %s\n",orArray.get(i8).name);
         						}
         						else
-        						totalPoints = totalPoints -orArray.get(i2).numPoints;
+        						totalPoints = totalPoints -orArray.get(i8).numPoints;
         					}
         				}
    				}
     				selected.add(combineAll);	
     			}		    								
-    }	
+    }		
     		stringPoints ="Points: "+ String.valueOf(totalPoints); 		
-    		l.setText(selected.get(x));
     		l2.setText(stringPoints);
     		x++;
     	}	   	 
     });
+    b4.addActionListener(new ActionListener(){
+    	public void actionPerformed(ActionEvent e){
+    		for (String s: selected){
+    			
+    				if (model9.contains(s)){}
+    				
+    				else
+    			model9.addElement(s);	
+    	    }
+    		JList selected2 = new JList(model9);
+    		selected2.setBounds(0, 0, 1400, 200);
+    		frame.add(selected2);
+    	}	   	 
+    });
+   
     buttonBox.add(button);
-    buttonBox.add(Box.createGlue());
     buttonBox.add(button2);
-    buttonBox.add(Box.createGlue());
     buttonBox.add(button3);
-    buttonBox.add(Box.createGlue());
     buttonBox.add(button5);
-    buttonBox.add(Box.createGlue());
     buttonBox.add(button6);
-    buttonBox.add(Box.createGlue());
     buttonBox.add(button7);
     buttonPanel.add(buttonBox);
     
     buttonBox2.add(b);
-    buttonBox2.add(Box.createHorizontalGlue());
     buttonBox2.add(b3);
-    buttonBox2.add(Box.createHorizontalGlue());
     buttonBox2.add(b2);
-    buttonBox2.add(Box.createHorizontalGlue());
-    buttonPanel2.add(buttonBox2);
-    buttonBox2.add(Box.createHorizontalGlue());
+    buttonBox2.add(b4);
+    buttonPanel2.add(buttonBox2); 
+    
+    frame.setLayout(null);
+    buttonPanel2.setBounds(750, 550, 300, 60);
+    buttonPanel.setBounds(0,550,700,60);
+    comboPanel.setBounds(300,200,400,60);
+    l.setBounds(0,300,1250,120);
+    l2.setBounds(0,400,1250,60);
+    
     frame.add(comboPanel);
     frame.add(buttonPanel);
     frame.add(buttonPanel2);
     frame.add(l);
     frame.add(l2);
-    frame.setLayout(new FlowLayout());
-    frame.setSize(1000,800);
+   
+    frame.setSize(1400,700);
     frame.setVisible(true);
 }
+
 }
