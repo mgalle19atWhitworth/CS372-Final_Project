@@ -15,59 +15,70 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+/**
+ * The class creates buttons, lables, and list. Also imports the file
+ * @author Mckenna
+ */
 public class NoteReader  extends JFrame {
-	public static String name;
-	public static String points;
-	public static char hull;
-	public static char speed;
-	public static boolean officer;
-	public static boolean support;
-	public static boolean weapons;
-	public static boolean offensive;
-	public static boolean defensive;
-	public static boolean defensive2;
-	public static boolean ordnance;
-	public static String combine;
-	public static String combine2;
-	public static String combine3;
-	public static String combine4;
-	public static String combine5;
-	public static String combine6;
-	public static String combine7;
-	public static String combine8;
-	public static String combineAll;
-	public static int x =0;
-	public static int p;
-	public static int totalPoints = 400;
-	public static String stringPoints;
 	
 	
-	static ArrayList<Ships> ship= new ArrayList<Ships>();
-	static ArrayList<Officer> OfficersArray = new ArrayList<Officer>();
-	static ArrayList<Support> supportsArray = new ArrayList<Support>();
-	static ArrayList<Weapons> weaponArray = new ArrayList<Weapons>();
-	static ArrayList<Offensive> offArray = new ArrayList<Offensive>();
-	static ArrayList<Defensive> defArray= new ArrayList<Defensive>();
-	static ArrayList<Defensive> def2Array = new ArrayList<Defensive>();
-	static ArrayList<Ordnance> orArray = new ArrayList<Ordnance>();
-	static ArrayList<String> selected = new ArrayList<String>();
+	public static String name;////////////////
+	public static String points;//////////////
+	public static char hull;//////////////////
+	public static char speed;/////////////////
+	public static boolean officer;//////////// All for grabbing info out 
+	public static boolean support;////////////  the .csv file
+	public static boolean weapons;////////////
+	public static boolean offensive;//////////
+	public static boolean defensive;//////////
+	public static boolean defensive2;/////////
+	public static boolean ordnance;///////////
+	public static int p;//////////////////////
+	
+	public static String combine;/////////////////
+	public static String combine2;////////////////
+	public static String combine3;/////////////////
+	public static String combine4;/////////////////
+	public static String combine5;///////////////// All for combining all of
+	public static String combine6;/////////////////	your choices into one 
+	public static String combine7;/////////////////	string variable 
+	public static String combine8;/////////////////
+	public static String combineAll;///////////////
+
+	
+	public static int totalPoints = 400; // keeps track of how many points you have left to spend standard game is 400 points
+	public static String stringPoints; // converts total points into string so it can go in a jlabel
+	
+	
+	static ArrayList<Ships> ship= new ArrayList<Ships>();///////////////////
+	static ArrayList<Officer> OfficersArray = new ArrayList<Officer>();/////
+	static ArrayList<Support> supportsArray = new ArrayList<Support>();/////
+	static ArrayList<Weapons> weaponArray = new ArrayList<Weapons>();/////// Where the data imported
+	static ArrayList<Offensive> offArray = new ArrayList<Offensive>();////// for the .csv file
+	static ArrayList<Defensive> defArray= new ArrayList<Defensive>();/////// gets stored 
+	static ArrayList<Defensive> def2Array = new ArrayList<Defensive>();/////
+	static ArrayList<Ordnance> orArray = new ArrayList<Ordnance>();/////////
+	
+	static ArrayList<String> selected = new ArrayList<String>(); // where you choices get stored
 	
 	
 public static void main(String[] args){
-DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();
-DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<String>();
-DefaultComboBoxModel<String> model3 = new DefaultComboBoxModel<String>();
-DefaultComboBoxModel<String>model4 = new DefaultComboBoxModel<String>();
-DefaultComboBoxModel<String>model5 = new DefaultComboBoxModel<String>();
-DefaultComboBoxModel<String>model6 = new DefaultComboBoxModel<String>();
-DefaultComboBoxModel<String>model7 = new DefaultComboBoxModel<String>();
-DefaultComboBoxModel<String>model8 = new DefaultComboBoxModel<String>();
-DefaultListModel<String>model9= new DefaultListModel<String>();
+DefaultComboBoxModel<String> model = new DefaultComboBoxModel<String>();////
+DefaultComboBoxModel<String> model2 = new DefaultComboBoxModel<String>();///
+DefaultComboBoxModel<String> model3 = new DefaultComboBoxModel<String>();///
+DefaultComboBoxModel<String>model4 = new DefaultComboBoxModel<String>();/// creates combo models
+DefaultComboBoxModel<String>model5 = new DefaultComboBoxModel<String>();/// so i can store
+DefaultComboBoxModel<String>model6 = new DefaultComboBoxModel<String>();/// the array lists
+DefaultComboBoxModel<String>model7 = new DefaultComboBoxModel<String>();/// into comboBoxes 
+DefaultComboBoxModel<String>model8 = new DefaultComboBoxModel<String>();///
+
+DefaultListModel<String>model9= new DefaultListModel<String>();// stores your array list of choices
 
 
 JFrame frame = new JFrame("FinalProject");
 frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
+// imports the file
 	String curdir = System.getProperty("user.dir") + "\\src";
 	System.out.println(curdir);
     File cd = new File(curdir);
@@ -79,7 +90,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                 BufferedReader rdr = new BufferedReader(ir);
                 String line = rdr.readLine();
                 while (line != null) {                  
-                       if(line.contains("Ship")){
+                       if(line.contains("Ship")){ // finds the ship lines and stores the data
                            
                        int s = line.indexOf('"');
                    		int e = line.indexOf('"', s+1);
@@ -125,7 +136,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                    		else if (check =='-')
                    			ordnance =false;           
                        }
-                       else if(line.contains("Officer")){
+                       else if(line.contains("Officer")){// finds the officer lines and stores the data
                     	   int s = line.indexOf('"');
                       		int e = line.indexOf('"', s+1);
                       		if (s >= 0 && e >= 0)
@@ -134,7 +145,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		p = Integer.parseInt(line.substring(34,35));
                       			
                        }
-                       else if (line.contains("Support")){                   	 
+                       else if (line.contains("Support")){// finds the support lines and stores the data                 	 
                     	   int s = line.indexOf('"');
                       		int e = line.indexOf('"', s+1);
                       		if (s >= 0 && e >= 0)
@@ -142,7 +153,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		points = line.substring(37, 38);
                       		p = Integer.parseInt(line.substring(37,38));
                  		}
-                       else if (line.contains("Weapons")){ 
+                       else if (line.contains("Weapons")){ // finds the weapons lines and stores the data
                     	   int s = line.indexOf('"');
                       		int e = line.indexOf('"', s+1);
                       		if (s >= 0 && e >= 0)
@@ -150,7 +161,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		points = line.substring(30, 31);
                       		p = Integer.parseInt(line.substring(30,31));
                  		}
-                       else if (line.contains("Offensive")){ 
+                       else if (line.contains("Offensive")){ // find the offensive lines and stores the data
                     	   int s = line.indexOf('"');
                       		int e = line.indexOf('"', s+1);
                       		if (s >= 0 && e >= 0)
@@ -158,7 +169,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		points = line.substring(36, 37);
                       		p = Integer.parseInt(line.substring(36,37));
                  		}
-                       else if (line.contains("Defensive")){ 
+                       else if (line.contains("Defensive")){ // finds the defensive lines ands stores the data
                     	   int s = line.indexOf('"');
                       		int e = line.indexOf('"', s+1);
                       		if (s >= 0 && e >= 0)
@@ -166,7 +177,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                       		points = line.substring(39, 40);
                       		p = Integer.parseInt(line.substring(39,40));
                  		}
-                       else if(line.contains("Ordnance")){
+                       else if(line.contains("Ordnance")){ // finds the ordinance lines and stores the data
                     	   int s = line.indexOf('"');
                      		int e = line.indexOf('"', s+1);
                      		if (s >= 0 && e >= 0)
@@ -174,31 +185,38 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
                      		points = line.substring(39, 41);
                      		p = Integer.parseInt(line.substring(39,40));
                        }
-                    if(line.contains("Ship")){
+                       // if its a ship then it creates a ship and puts it in an arraylist
+                    if(line.contains("Ship")){ // 
                     Ships S= new  Ships( name, points,p, hull, speed, officer, support,weapons,offensive, defensive,defensive2, ordnance);
                     ship.add(S);
                     }
+                    // if its a officer creates a officer and puts it into an arraylist
                     else if (line.contains("Officer")){
                     	Officer o = new Officer(name,points,p);
                     	OfficersArray.add(o);
                     }
+                    // if its a support bonus creates a support bonus and puts it into an array list 
                     else if(line.contains("Support")){
                     	Support s = new Support(name,points,p);
                     	supportsArray.add(s);
                     }
+                    // if its a weapons bonus creates a weapons object and puts it into a an arraylist
                     else if(line.contains("Weapons")){
                     	Weapons w = new Weapons(name,points,p);
                     	weaponArray.add(w);
                     }
+                    //if its a offensive bonus creates a offensive object and puts it into an arraylist
                     else if(line.contains("Offensive")){
                     	Offensive o = new Offensive(name,points,p);
                     	offArray.add(o);
                     }
+                    // if its a defensive bonus creates a defensive object and puts it into an arraylist
                     else if(line.contains("Defensive")){
                     	Defensive d = new Defensive(name,points,p);
                     	defArray.add(d);
                     	def2Array.add(d);
                     }
+                    // if its a ordinance bonus creates an ordinance object and puts it into an arraylist
                     else if(line.contains("Ordnance")){
                     	Ordnance o = new Ordnance(name,points,p);
                     	orArray.add(o);
@@ -210,6 +228,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             catch (Exception ex) { System.out.printf("Failed: %s\n", ex.getMessage());}
 }
 }
+    // puts the array lists into the comboBox models
     for(Ships s: ship){
     	model.addElement(s.name);
   
@@ -235,6 +254,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     for (Ordnance o: orArray){
     	model8.addElement(o.name);
     }
+    // Creates comboboxes for all the arraylists
     JComboBox shipBox = new JComboBox(model);
     JComboBox officerBox = new JComboBox(model2);
     JComboBox supportBox = new JComboBox(model3);
@@ -244,12 +264,14 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JComboBox def2Box = new JComboBox(model7);
     JComboBox ordnanceBox = new JComboBox(model8);
    
+    // creates panels to put the different components in
 	JPanel comboPanel = new JPanel();
     JPanel comboPanel2 = new JPanel();
     JPanel buttonPanel = new JPanel();
     JPanel buttonPanel2 = new JPanel();
+    
     comboPanel.add(shipBox);
-
+    
     
     JButton button = new JButton("Ship Info");
     JButton button2 = new JButton("Officer Info");
@@ -258,18 +280,21 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     JButton button5 = new JButton("Offensive Info");
     JButton button6 = new JButton("Defensive Info");
     JButton button7 = new JButton("Ordinance Info");
+    
     JButton b = new JButton("Select");
     JButton b2 = new JButton("Clear");
     JButton b3 = new JButton("Add");
     JButton b4 = new JButton("Update List");
     JLabel l = new JLabel("Ships");
+    
     stringPoints = "Points: "+String.valueOf(totalPoints);
     JLabel l2 = new JLabel(stringPoints);
+    
     Box buttonBox =Box.createHorizontalBox();
     Box buttonBox2 =Box.createHorizontalBox();
     
   
-    
+    // Allows you to select a ship and then the bonus the ship can have show up
     b.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		String selection =  (String) shipBox.getSelectedItem();
@@ -305,6 +330,8 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	}
     	
     });
+    
+    // b2 clears the different bonuses from the screen
     b2.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		String selection =  (String) shipBox.getSelectedItem();
@@ -342,6 +369,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     	}
     	
     });
+    // Shows the ships details
     button.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		String selection;    		
@@ -353,6 +381,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     		}
     	}
     });
+    // shows the supports bonuses details
     button3.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		
@@ -363,6 +392,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				}
     	}
     });
+    // shows the officers bonus details
     button2.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		String selection =(String) officerBox.getSelectedItem();				
@@ -373,6 +403,8 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     		
     	}
     });
+    
+   // shows the weapons bonus details
     button4.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
 			String selection =(String) weaponsBox.getSelectedItem();				
@@ -382,6 +414,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
     	}
     });
+    // shows the offensive bonus details
     button5.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
 		String selection =(String) offensiveBox.getSelectedItem();				
@@ -391,6 +424,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
     	}
     });
+    // shows the defensive bonus details
     button6.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
 			String selection =(String) defBox.getSelectedItem();				
@@ -400,6 +434,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
     	}
     });
+    //shows the ordinance bonus details
     button7.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		String selection =(String) ordnanceBox.getSelectedItem();				
@@ -409,6 +444,7 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 			}
     	}
     });
+    // add the selected ship and bonuses to the selected array
     b3.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		String selection =  (String) shipBox.getSelectedItem();
@@ -524,9 +560,10 @@ frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     }		
     		stringPoints ="Points: "+ String.valueOf(totalPoints); 		
     		l2.setText(stringPoints);
-    		x++;
+    
     	}	   	 
     });
+    // shows the selected arrayList
     b4.addActionListener(new ActionListener(){
     	public void actionPerformed(ActionEvent e){
     		for (String s: selected){
